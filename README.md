@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/DavidMStraub/pylha.svg?branch=master)](https://travis-ci.org/DavidMStraub/pylha) [![Coverage Status](https://coveralls.io/repos/github/DavidMStraub/pylha/badge.svg?branch=master)](https://coveralls.io/github/DavidMStraub/pylha?branch=master)
+
 # pylha
 
 A Python package to convert data files in SLHA and similar formats to Python objects, JSON, or YAML.
