@@ -1,0 +1,14 @@
+language: python
+python:
+  - "3.4"
+  - "3.5"
+
+notifications:
+  email: false
+
+  - pip install pylha
+  - pip install coveralls
+
+script: nosetests --with-coverage --cover-package=pylha
+
+after_success: coveralls
