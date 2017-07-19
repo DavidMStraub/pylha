@@ -13,14 +13,14 @@ def numval(token):
         return token.value
 
 _tokens = [
-        ('FLOAT',  r'(?:[\+\-])?\d+\.\d+(?:[eEdD][\+\-]\d+)?'),
-        ('INTEGER',  r'(?:[\+\-])?\d+'),
+        ('FLOAT',  r'(?:[\+\-])?\d+\.\d+(?:[eEdD][\+\-]\d+)?(?!\.)'),
+        ('INTEGER',  r'(?:[\+\-])?\d+(?!\.)'),
         ('BLOCK',      r'^[a-z]+'),
         ('NEWLINE', r'\n'),
         ('SKIP',    r'[ \t]+'),
         ('COMMENT',r'#.*'),
-        ('WORD',r'[\w\=]+'),
-        ('OTHER',r'.*'),
+        ('WORD',r'[\w\=\.]+'),
+        ('OTHER',r'[^#]*'),
     ]
 
 def tokenize(code):
