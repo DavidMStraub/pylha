@@ -13,7 +13,7 @@ def numval(token):
         return token.value
 
 _tokens = [
-        ('FLOAT',  r'(?:[\+\-])?\d+\.\d+(?:[eEdD][\+\-]\d+)?(?!\.)'),
+        ('FLOAT',  r'(?:[\+\-])?(?:\d+\.\d*|\.\d+)(?:[eEdD][\+\-]\d+)?(?!\.)'),
         ('INTEGER',  r'(?:[\+\-])?\d+(?!\.)'),
         ('BLOCK',      r'^[a-z]+'),
         ('NEWLINE', r'\n'),

@@ -47,6 +47,20 @@ class TestLHA(unittest.TestCase):
             1 2.0
             """)
 
+    def test_format(self):
+        # various checks with differently formatted numbers and spaces
+        self.assertDictEqual(pylha.load("BLOCK name\n1\t2.0 #comment"),
+                             {'BLOCK': {'name': {'values': [[1, 2.0]]}}})
+        self.assertDictEqual(pylha.load("BLOCK name\n  \t 1 2."),
+                             {'BLOCK': {'name': {'values': [[1, 2.]]}}})
+        self.assertDictEqual(pylha.load("BLOCK name\n  \t 1 2.#comment"),
+                             {'BLOCK': {'name': {'values': [[1, 2.0]]}}})
+        self.assertDictEqual(pylha.load("BLOCK name\n  \t 11325325 .2#comment"),
+                             {'BLOCK': {'name': {'values': [[11325325, 0.2]]}}})
+        self.assertDictEqual(pylha.load("BLOCK name\n1\t2.#2.0comment"),
+                             {'BLOCK': {'name': {'values': [[1, 2.0]]}}})
+        self.assertDictEqual(pylha.load("BLOCK name\n  \t 1 .#2.0comment"),
+                             {'BLOCK': {'name': {'values': [[1, '.']]}}})
 
     def test_write(self):
         # read
