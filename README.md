@@ -26,7 +26,7 @@ While [several well-tested parsers](http://skands.physics.monash.edu/slha/) exis
 
 ## Usage
 
-At the moment, pylha can only be used as a Python module (command line scripts will be added later). To install it, use
+At the moment, pylha can only be used as a Python module (command line scripts might be added later). To install it, use
 
 ```
 pip3 install pylha

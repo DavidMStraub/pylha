@@ -61,6 +61,20 @@ class TestLHA(unittest.TestCase):
                              {'BLOCK': {'name': {'values': [[1, 2.0]]}}})
         self.assertDictEqual(pylha.load("BLOCK name\n  \t 1 .#2.0comment"),
                              {'BLOCK': {'name': {'values': [[1, '.']]}}})
+    def test_format_comments(self):
+        # various checks with differently formatted numbers and spaces
+        self.assertDictEqual(pylha.load("BLOCK name\n1\t2.0 #comment", comments=True),
+                             {'BLOCK': {'name': {'values': [[1, 2.0, '#comment']]}}})
+        self.assertDictEqual(pylha.load("BLOCK name\n  \t 1 2."),
+                             {'BLOCK': {'name': {'values': [[1, 2.]]}}})
+        self.assertDictEqual(pylha.load("BLOCK name\n  \t 1 2.#comment", comments=True),
+                             {'BLOCK': {'name': {'values': [[1, 2.0, '#comment']]}}})
+        self.assertDictEqual(pylha.load("BLOCK name\n  \t 11325325 .2#comment", comments=True),
+                             {'BLOCK': {'name': {'values': [[11325325, 0.2, '#comment']]}}})
+        self.assertDictEqual(pylha.load("BLOCK name\n1\t2.#2.0comment", comments=True),
+                             {'BLOCK': {'name': {'values': [[1, 2.0, '#2.0comment']]}}})
+        self.assertDictEqual(pylha.load("BLOCK name\n  \t 1 .#2.0comment", comments=True),
+                             {'BLOCK': {'name': {'values': [[1, '.', '#2.0comment']]}}})
 
     def test_write(self):
         # read

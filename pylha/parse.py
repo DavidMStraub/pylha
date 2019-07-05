@@ -44,15 +44,18 @@ def tokenize(code):
 class ParseError(Exception):
     pass
 
-def parse(tokens):
-    """Parse the token list into a hierarchical data structure"""
+def parse(tokens, comments=False):
+    """Parse the token list into a hierarchical data structure.
+
+    If `comments` is set to True, line comments will be treated as
+    normal string values rather than ignored."""
     d = collections.OrderedDict()
     prev_line = 0
     blockname = None
     blockline = None
     for token in tokens:
-        if token.type == 'COMMENT':
-            continue
+        if token.type == 'COMMENT' and (not comments or token.line != prev_line):
+            continue  # ignore comments on new line or when comments is False
         elif token.type == 'BLOCK':
             block = token
             blockline = token.line
@@ -68,7 +71,10 @@ def parse(tokens):
                 d[blocktype][blockname]['info'].append(numval(token))
         elif token.line != prev_line:
             if blockname is None:
-                raise ParseError("Found value outside block!")
+                if token.type == 'COMMENT':
+                    continue
+                else:
+                    raise ParseError("Found value outside block!")
             d[blocktype][blockname]['values'].append([numval(token)])
         else:
             if blockname is None:
@@ -77,12 +83,15 @@ def parse(tokens):
         prev_line = token.line
     return d
 
-def load(stream):
+def load(stream, comments=False):
     """Parse the LHA document and produce the corresponding Python object.
-    Accepts a string or a file-like object."""
+    Accepts a string or a file-like object.
+
+    If `comments` is set to True, line comments will be treated as
+    normal string values rather than ignored."""
     if isinstance(stream, str):
         string = stream
     else:
         string = stream.read()
     tokens = tokenize(string)
-    return parse(tokens)
+    return parse(tokens, comments=comments)

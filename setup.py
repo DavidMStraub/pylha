@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='pylha',
-      version='0.3',
+      version='0.4',
       author='David M. Straub',
       author_email='david.straub@tum.de',
       url='https://github.com/DavidMStraub/pylha',
